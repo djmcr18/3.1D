@@ -13,6 +13,7 @@
         <li><router-link to="/forums">Forums</router-link></li>
         <li><router-link to="/store">Store</router-link></li>
         <li><router-link to="/cart">Shopping Cart</router-link></li>
+        <li><router-link to="/CustomerRegistration">Register</router-link></li>
       </ul>
     </nav>
 
