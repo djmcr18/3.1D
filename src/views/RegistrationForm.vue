@@ -1,9 +1,6 @@
 <template>
     <div>
-        <div style="text-align: center; margin-bottom: 30px;">
-            <img src="UberEatsLogo.png" alt="UberEats Logo" style="max-width: 200px;">
-        </div>
-
+        <br><br>
         <!-- Message from Vue with dynamic class binding -->
         <div class="message" :class="messageType">{{ message }}</div>
 
@@ -36,7 +33,9 @@
 </template>
 
 <script>
+
 export default {
+
     data() {
         return {
             FirstName: "",

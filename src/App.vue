@@ -1,5 +1,14 @@
 <template>
   <div id="app">
+  
+    <!-- Account Actions Bar -->
+    <div class="actions-bar">
+      <div class="account-actions">
+        <router-link to="/cart"><i class="fas fa-shopping-cart"></i></router-link>
+        <router-link to="/CustomerRegistration">Register</router-link>
+      </div>
+    </div>
+
     <!-- Title Header -->
     <header class="title-header">
       <h1 class="site-title">FOOPY</h1>
@@ -10,10 +19,8 @@
       <ul>
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/foopyfeed">FOOPY NEWS FEED</router-link></li>
-        <li><router-link to="/forums">Forums</router-link></li>
+        <li><router-link to="/tacticsboard">Tactics Board</router-link></li>
         <li><router-link to="/store">Store</router-link></li>
-        <li><router-link to="/cart">Shopping Cart</router-link></li>
-        <li><router-link to="/CustomerRegistration">Register</router-link></li>
       </ul>
     </nav>
 
@@ -26,11 +33,6 @@
     </footer>
   </div>
 </template>
-
-<script>
-import { ref } from 'vue';
-
-</script>
 
 <style scoped>
 /* Title Header styles */
@@ -124,5 +126,45 @@ h1, h2 {
   main {
     padding: 10px;
   }
+}
+
+/* Account Actions bar */
+.actions-bar {
+  background-color: #333;
+  padding: 5px 0;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.account-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  max-width: 1200px; /* Adjust according to your site's maximum width */
+  margin: 0 auto;
+  padding: 0 20px; /* Adding padding to ensure it doesn't stick to the edge */
+}
+
+.account-actions a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.account-actions a:hover {
+  color: #4CAF50;
+}
+
+.title-header {
+  margin-top: 40px; /* Push down the title header to account for the fixed actions-bar */
+}
+
+.fas.fa-shopping-cart {
+    font-size: 20px;
 }
 </style>
