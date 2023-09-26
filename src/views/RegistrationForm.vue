@@ -4,7 +4,7 @@
         <!-- Message from Vue with dynamic class binding -->
         <div class="message" :class="messageType">{{ message }}</div>
 
-        <h2>Customer Registration</h2>
+        <h2>Foopy Member Registration</h2>
         <form @submit.prevent="submitForm">
             <label for="FirstName">First Name:</label>
             <input type="text" id="FirstName" v-model="FirstName">
@@ -24,8 +24,6 @@
             <input type="submit" value="Register">
         </form>
         <footer style="text-align: center; margin-top: 50px; font-size: 14px;">
-            <br>
-            <p>UberEats &copy; 2023</p>
             <br>
             <p>Designed by Diego Miranda Ciudad Real</p>
         </footer>

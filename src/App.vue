@@ -39,15 +39,16 @@
 .title-header {
   background-color: #4CAF50; /* Green background color */
   color: white;
-  padding: 10px 0;
+  padding: 1  0px 0;
   text-align: center;
   font-family: 'CoolFont', sans-serif; /* Apply a cooler font */
   margin-bottom: 20px; /* Separation from the navigation bar */
+  margin-top: 30px; /* Adjusted to account for the actions-bar's height + a bit of additional space */
 }
 
 .site-title {
   font-size: 36px; /* Adjust the font size as needed for a cooler look */
-  margin: 0; /* Remove margin for the h1 element */
+  margin: 5px; /* Remove margin for the h1 element */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Add a text shadow for a cool effect */
   font-style: italic; /* Make the font italic */
 }
@@ -56,11 +57,12 @@
 nav {
   background-color: #333;
   color: white;
-  padding: 10px 0;
+  padding: 20px 0;  /* Increase padding for thickness */
   display: flex;
   justify-content: center; /* Center the navigation links horizontally */
   align-items: center;
   font-family: 'Roboto', sans-serif; /* Use the 'Roboto' font from Google Fonts for the entire website */
+  border-radius: 10px;  /* Curved corners */
 }
 
 nav ul {
@@ -77,11 +79,40 @@ nav a {
   color: white;
   font-weight: bold;
   transition: color 0.3s ease;
+  padding: 7px;  /* Added padding for a larger clickable area and better visual spacing */
+  border-radius: 5px; /* Rounded corners for hover effect */
 }
 
 nav a:hover {
   color: #4CAF50; /* Green color on hover */
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
 }
+
+/* Media query for smaller screens */
+
+@media (max-width: 640px) {
+  nav {
+    padding: 15px 0;  /* Adjusted padding */
+  }
+  
+  nav ul {
+    flex-direction: column; /* stack the links vertically */
+    align-items: center;    /* center the links */
+  }
+
+  nav li {
+    margin: 15px 0;  /* Increased vertical spacing for stacked links */
+    width: 100%;     /* Make the li elements span the full width */
+    text-align: center; /* Center the text within the li */
+  }
+
+  nav a {
+    padding: 10px 20px;  /* Added padding for a larger clickable area and better visual spacing */
+    border-radius: 5px; /* Rounded corners for hover effect */
+  }
+  
+}
+
 
 /* Main content styles */
 main {
@@ -95,37 +126,6 @@ main {
 h1, h2 {
   color: #333;
   font-family: 'Roboto', sans-serif; /* Apply the 'Roboto' font to headings */
-}
-
-/* News section styles */
-.news {
-  background-color: white;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
-/* Responsive layout */
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  nav ul {
-    margin-top: 10px;
-    justify-content: center; /* Center the navigation links vertically */
-  }
-
-  nav li {
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-
-  main {
-    padding: 10px;
-  }
 }
 
 /* Account Actions bar */
@@ -158,10 +158,6 @@ h1, h2 {
 
 .account-actions a:hover {
   color: #4CAF50;
-}
-
-.title-header {
-  margin-top: 40px; /* Push down the title header to account for the fixed actions-bar */
 }
 
 .fas.fa-shopping-cart {
