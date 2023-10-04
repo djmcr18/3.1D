@@ -1,8 +1,8 @@
 <template>
     <section>
-        <div id="qldMap" style="width: 100%; height: 400px;"></div>
+        <div :id="mapId" style="width: 100%; height: 400px;"></div>
         <ul class="store-list">
-            <li v-for="store in qldStores" :key="store.name" class="store-item">
+            <li v-for="store in stores" :key="store.name" class="store-item">
                 <strong class="store-name">{{ store.name }}</strong>
                 <p class="store-description">{{ store.description }}</p>
             </li>
@@ -10,40 +10,42 @@
     </section>
 </template>
 
-<script>
-export default {
-    data() {
-        return {
-            qldStores: [
-                { name: 'Brisbane CBD', lat: -27.4698, lng: 153.0251, description: 'Our primary store in Brisbane.' },
-                { name: 'Gold Coast', lat: -28.0167, lng: 153.4000, description: 'Located near the beautiful beaches.' },
-            ]
-        };
-    },
-    mounted() {
-        this.initQLDMap();
-    },
-    methods: {
-        initQLDMap() {
-            let qldMap = new google.maps.Map(document.getElementById('qldMap'), {
-                zoom: 8
-            });
+<script setup>
+import { ref, defineProps, onMounted } from 'vue';
+import storeLocations from '/public/storeLocations.json';
 
-            let bounds = new google.maps.LatLngBounds();
-            
-            this.qldStores.forEach(store => {
-                let marker = new google.maps.Marker({
-                    position: { lat: store.lat, lng: store.lng },
-                    map: qldMap,
-                    title: store.name
-                });
-                bounds.extend(marker.getPosition());
-            });
-            
-            qldMap.fitBounds(bounds);
-        }
+const { region } = defineProps({
+    region: {
+        type: String,
+        required: true
     }
-}
+});
+
+const mapId = ref(region + "Map");
+const stores = storeLocations[region];
+
+onMounted(() => {
+    initMap();
+});
+
+const initMap = () => {
+    let map = new google.maps.Map(document.getElementById(mapId.value), {
+        zoom: 8
+    });
+
+    let bounds = new google.maps.LatLngBounds();
+
+    stores.forEach(store => {
+        let marker = new google.maps.Marker({
+            position: { lat: store.lat, lng: store.lng },
+            map: map,
+            title: store.name
+        });
+        bounds.extend(marker.getPosition());
+    });
+
+    map.fitBounds(bounds);
+};
 </script>
 
 <style scoped>

@@ -1,4 +1,5 @@
 <template>
+  <transition name="fade" appear>
     <div class="conveyor">
       <div class="conveyor-belt">
         <!-- Using two v-for loops to duplicate the images for a continuous effect -->
@@ -6,25 +7,23 @@
         <img v-for="img in images" :key="'second' + img" :src="img" alt="Banner Image" class="conveyor-image" />
       </div>
     </div>
+  </transition>
 </template>
 
-<script>
-export default {
-    data() {
-      return {
-        images: [
-          'img/MoreliaNeo3.jpeg',
-          'img/Jguard.jpeg',
-          'img/ChampionsLeagueBall.jpeg',
-          'img/AmoSockTape.png',
-          'img/trusox.png',
-          'img/FoamRoller.png',
-          'img/SelectNeckWarmer.png',
-          'img/GatoradeBottle.png',
-        ],
-      };
-    },
-};
+<script setup>
+import { ref } from 'vue';
+
+// Data
+const images = ref([
+  'img/MoreliaNeo3.jpeg',
+  'img/Jguard.jpeg',
+  'img/ChampionsLeagueBall.jpeg',
+  'img/AmoSockTape.png',
+  'img/trusox.png',
+  'img/FoamRoller.png',
+  'img/SelectNeckWarmer.png',
+  'img/GatoradeBottle.png',
+]);
 </script>
 
 <style scoped>
@@ -48,6 +47,16 @@ export default {
     height: 170px;
     object-fit: contain;
     margin-right: 20px;  /* Reduced gap between images */
+    transition: transform 0.3s, filter 0.3s;
+}
+
+.conveyor-image:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+.conveyor-image:active {
+    transform: scale(0.95);
 }
 
 @keyframes scroll {
@@ -57,6 +66,13 @@ export default {
     100% {
         transform: translateX(-2380px);
     }
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+    opacity: 0;
 }
 
 </style>

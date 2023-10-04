@@ -1,9 +1,12 @@
 <template>
-  <div class="shopping-cart">
-    <h1 class="cart-title">Your Shopping Cart</h1>
-    <div v-if="cart.length === 0" class="empty-cart">Your cart is empty</div>
-    <div v-else class="cart-items">
-      <div v-for="(cartItem, store) in cartItems" :key="store" class="cart-item">
+  <div class="content-container">
+    <div class="intro-section">
+      <h1>Your Wishlist</h1>
+    </div>
+    <div v-show="cart.length === 0" class="empty-cart">Your cart is empty</div>
+    <div v-show="cart.length > 0" class="cart-items">
+      <transition-group name="cart-item-fade" tag="div">
+        <div v-for="cartItem in cartItems" :key="cartItem.product.id" class="cart-item">
         <img :src="`/img/${cartItem.product.image}`" alt="Product Image" class="product-image">
         <div class="item-details">
           <div class="item-name">{{ cartItem.product.name }}</div>
@@ -16,72 +19,63 @@
           <button @click="removeAllFromCart(cartItem.product)" class="remove-button">Remove All</button>
         </div>
       </div>
+    </transition-group>
       <div class="checkout-section">
         <div class="cart-total">
           Total: ${{ cartTotal.toFixed(2) }}
         </div>
-        <button class="checkout-button">Proceed to Checkout</button>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import { mapState, mapMutations } from 'vuex';
+<script setup>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 
-export default {
-  computed: {
-    ...mapState(['cart']),
-    cartItems() {
-      const cartItemMap = {};
+const store = useStore();
 
-      this.cart.forEach((product) => {
-        if (!cartItemMap[product.id]) {
-          cartItemMap[product.id] = { product, quantity: 0 };
-        }
-        cartItemMap[product.id].quantity += 1;
-      });
+// Getting state and mutations from Vuex store
+const cart = computed(() => store.state.cart);
 
-      // Convert the cartItemMap object into an array and sort it by product id
-      const cartItems = Object.values(cartItemMap).sort((a, b) => a.product.id - b.product.id);
+// cartItems computed property
+const cartItems = computed(() => {
+  const cartItemMap = {};
 
-      return cartItems;
-    },
-    cartTotal() {
-      return this.cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
-    },
-  },
-  methods: {
-    ...mapMutations(['removeFromCart', 'decrementCartItem', 'removeAllFromCart', 'addToCart']),
-    decrementQuantity(product) {
-      this.decrementCartItem(product);
-    },
-    incrementQuantity(product) {
-      this.addToCart(product);
-    },
-  },
-};
+  cart.value.forEach((product) => {
+    if (!cartItemMap[product.id]) {
+      cartItemMap[product.id] = { product, quantity: 0 };
+    }
+    cartItemMap[product.id].quantity += 1;
+  });
+
+  // Convert the cartItemMap object into an array and sort it by product id
+  return Object.values(cartItemMap).sort((a, b) => a.product.id - b.product.id);
+});
+
+// cartTotal computed property
+const cartTotal = computed(() => {
+  return cartItems.value.reduce((total, item) => total + item.product.price * item.quantity, 0);
+});
+
+// Mapping mutations from Vuex store
+const removeFromCart = product => store.commit('removeFromCart', product);
+const decrementCartItem = product => store.commit('decrementCartItem', product);
+const removeAllFromCart = () => store.commit('removeAllFromCart');
+const addToCart = product => store.commit('addToCart', product);
+
+// Additional methods
+const decrementQuantity = product => decrementCartItem(product);
+const incrementQuantity = product => addToCart(product);
 </script>
 
-<style scoped>
-.shopping-cart {
-  background-color: #f9f9f9;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-}
 
-.cart-title {
-  font-size: 28px;
-  margin-bottom: 30px;
-  color: #333;
+<style scoped>
+
+.intro-section {
   border-bottom: 2px solid #ddd;
   padding-bottom: 15px;
 }
-
 .cart-item {
   display: flex;
   align-items: center;
@@ -89,22 +83,27 @@ export default {
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
-  margin: 10px;
+  margin: 15px auto; /* Centering the cart items with 'auto' margins on left and right */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   width: 100%;
+  box-sizing: border-box; /* Ensuring padding and border are included in the total width */
 }
 
 .product-image {
   max-width: 120px;
   height: auto;
   margin-right: 10px;
+  flex-shrink: 0; /* Prevents the image from shrinking */
 }
 
 .item-details {
   display: flex;
   flex-grow: 1;
   align-items: center;
+  justify-content: space-between; /* Distribute space evenly between the child elements */
+  width: 100%;
 }
+
 
 .item-name {
   flex-grow: 1;
@@ -163,6 +162,7 @@ export default {
   background-color: #f7f7f7;
   border-top: 2px solid #ddd;
   border-bottom: 2px solid #ddd;
+  text-align: center;
 }
 
 .checkout-section {
@@ -219,5 +219,64 @@ export default {
     margin-right: 0;
   }
 }
-</style>
 
+.cart-item-fade-enter-active, .cart-item-fade-leave-active {
+  transition: all 0.5s;
+}
+.cart-item-fade-enter, .cart-item-fade-leave-to {
+  opacity: 0;
+  transform: translateY(30px) scale(0.5);
+}
+
+@media (max-width: 768px) { /* Tablet devices */
+    .content-container {
+        padding: 0 20px; /* Add some padding to the left and right for better margins on small screens */
+    }
+
+    .cart-item {
+        flex-direction: column; /* Display cart item details vertically */
+    }
+
+    .product-image {
+        margin-bottom: 15px; /* Provide space between the image and the item details */
+        max-width: 50%;
+    }
+
+    .item-details {
+        flex-direction: column; /* Align item details vertically */
+        align-items: center; /* Center align items for a better look */
+    }
+
+    .item-name, .item-price, .quantity-controls {
+        margin: 10px 0; /* Provide more spacing between items */
+    }
+
+    .remove-button {
+        margin: 0px 0; /* Adjust the margin to accommodate the vertical layout */
+    }
+}
+
+@media (max-width: 480px) { /* Mobile devices */
+    .item-name {
+        font-size: 16px; /* Reduce the font size slightly */
+    }
+
+    .item-price {
+        font-size: 14px; /* Reduce the font size slightly */
+    }
+
+    .quantity-button, .remove-button {
+        padding: 5px 10px; /* Reduce padding to fit smaller screens */
+        font-size: 12px; /* Reduce font size for a neater look */
+    }
+
+    .cart-total {
+        font-size: 20px; /* Adjust font size for cart total */
+    }
+
+    .checkout-button {
+        font-size: 16px; /* Adjust font size for the checkout button */
+        padding: 12px; /* Reduce padding slightly */
+    }
+}
+</style>

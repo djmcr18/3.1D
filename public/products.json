@@ -1,0 +1,11 @@
+[
+    { "id": 1, "name": "Champions League Ball", "price": 189, "image": "ChampionsLeagueBall.jpeg" },
+    { "id": 2, "name": "Mizuno Morelia Neo 3 MIJ", "price": 550, "image": "MoreliaNeo3.jpeg" },
+    { "id": 3, "name": "Nike J Guards", "price": 20, "image": "Jguard.jpeg" },
+    { "id": 4, "name": "Amo Sock Tape", "price": 8, "image": "AmoSockTape.png" },
+    { "id": 5, "name": "Trusox", "price": 40, "image": "trusox.png" },
+    { "id": 6, "name": "Foam Roller", "price": 30, "image": "FoamRoller.png" },
+    { "id": 7, "name": "Select Neck Warmer", "price": 25, "image": "SelectNeckWarmer.png" },
+    { "id": 8, "name": "Gatorade Barrel", "price": 59, "image": "GatoradeBottle.png" }
+  ]
+  

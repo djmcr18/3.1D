@@ -1,5 +1,3 @@
-// store.js (store)
-
 import { createStore } from 'vuex';
 
 const store = createStore({

@@ -72,72 +72,46 @@
         <!-- Locations heading -->
         <h2 class="location-heading">Visit Us at Our Convenient Locations Nationwide</h2>
   
-        <div class="map-grid">
-          <div class="map-box">
-              <h4 class="map-title">Victoria Locations</h4>
-              <br>
-              <VICMap />
-          </div>
-          <div class="map-box">
-              <h4 class="map-title">NSW Locations</h4>
-              <br>
-              <NSWMap />
-          </div>
-          <div class="map-box">
-              <h4 class="map-title">Queensland Locations</h4>
-              <br>
-              <QLDMap />
-          </div>
-          <div class="map-box">
-              <h4 class="map-title">South Australia Locations</h4>
-              <br>
-              <SAMap />
-          </div>
-          <div class="map-box">
-              <h4 class="map-title">Western Australia Locations</h4>
-              <br>
-              <WAMap />
-          </div>
-      </div>
+        <div class="map-grid"> 
+            <div class="map-box">
+                <h4 class="map-title">Victoria Locations</h4>
+                <br>
+                <StoreMap region="VIC" />
+            </div>
+
+            <div class="map-box">
+                <h4 class="map-title">NSW Locations</h4>
+                <br>
+                <StoreMap region="NSW" />
+            </div>
+
+            <div class="map-box">
+                <h4 class="map-title">Queensland Locations</h4>
+                <br>
+                <StoreMap region="QLD" />
+            </div>
+
+            <div class="map-box">
+                <h4 class="map-title">South Australia Locations</h4>
+                <br>
+                <StoreMap region="SA" />
+            </div>
+
+            <div class="map-box">
+                <h4 class="map-title">Western Australia Locations</h4>
+                <br>
+                <StoreMap region="WA" />
+            </div>
+        </div>
   </div>
 </template>
   
-<script>
-  import VICMap from '@/components/StoreMaps/VICMap.vue';
-  import NSWMap from '@/components/StoreMaps/NSWMap.vue';
-  import QLDMap from '@/components/StoreMaps/QLDMap.vue';
-  import SAMap from '@/components/StoreMaps/SAMap.vue';
-  import WAMap from '@/components/StoreMaps/WAMap.vue';
-  import ImageCarousel from '../components/ImageCarousel.vue';
-  
-  export default {
-      components: {
-          VICMap,
-          NSWMap,
-          QLDMap,
-          SAMap,
-          WAMap,
-          ImageCarousel
-      }
-  }
+<script setup>
+import StoreMap from '../components/StoreMap.vue';
+import ImageCarousel from '../components/ImageCarousel.vue';
 </script>
 
 <style scoped>
-.content-container {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: var(--color-background-soft);
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.intro-section {
-    text-align: center;
-    padding: 20px;
-    margin-bottom: 40px;
-    border-bottom: 1px solid var(--color-border);
-}
 
 .map-grid {
     display: grid;
@@ -164,13 +138,6 @@
     font-size: 20px;
     margin-bottom: 10px;
     color: var(--color-heading);
-    text-align: center;
-}
-
-.map-description {
-    font-size: 15px;
-    margin-bottom: 20px;
-    color: var(--color-text);
     text-align: center;
 }
 
@@ -218,17 +185,45 @@
     margin: 50px 0;
 }
 
-.title-section {
-    display: flex;
-    align-items: center;
-    gap: 20px;  /* Adjust the gap as needed */
-    justify-content: center;
-}
-
 .foopy-icon {
     width: 50px;  /* Adjust as needed */
     height: 50px; /* Adjust as needed */
     fill: var(--color-heading); /* You can adjust the fill color as required */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) { /* Tablet and below */
+    .map-grid {
+        grid-template-columns: 1fr; /* Stack vertically */
+    }
+    
+    .carousel-heading,
+    .location-heading {
+        font-size: 20px; /* Slightly reduce the font size */
+        margin-top: 25px;
+        margin-bottom: 15px;
+    }
+
+    .map-title {
+        font-size: 18px;
+    }
+
+    .section-divider {
+        margin: 30px 0;
+    }
+}
+
+@media (max-width: 480px) { /* Mobile devices */
+    .carousel-heading,
+    .location-heading {
+        font-size: 18px; /* Further reduce the font size for mobile */
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .map-title {
+        font-size: 16px;
+    }
 }
 
 </style>

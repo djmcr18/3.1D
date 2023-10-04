@@ -1,45 +1,38 @@
 <template>
   <div class="content-container">
-    <div class="intro-section">
-      <h1>Foopy News Feed</h1><br><br>
-      <h3>Stay updated with the latest football news and updates.</h3>
-    </div>
-    
-    <!-- Posts -->
-    <VideoPost />
-    <AudioPost />
-    <MaradonaPost />
-    <YoutubePost />
-
-    <!-- ... Add more posts as needed -->
-
+      <div class="intro-section">
+          <h1>Foopy News Feed</h1>
+          <h3>Stay updated with the latest football news and updates from our dedicated Foopy team.</h3>
+      </div>
+      
+      <NewsFeedPost v-for="post in posts" :key="post.id" :post="post" />
   </div>
 </template>
 
-<script>
-import VideoPost from '@/components/NewsFeedPosts/VideoPost.vue';
-import AudioPost from '@/components/NewsFeedPosts/AudioPost.vue';
-import YoutubePost from '@/components/NewsFeedPosts/YoutubePost.vue';
-import MaradonaPost from '../components/NewsFeedPosts/MaradonaPost.vue';
+<script setup>
+import { ref, onMounted } from 'vue';
+import NewsFeedPost from '../components/FoopyFeedPost.vue';
 
-export default {
-  components: {
-    VideoPost,
-    AudioPost,
-    YoutubePost,
-    MaradonaPost
-}
-}
+// Components
+const components = { NewsFeedPost };
+
+// Data
+let posts = ref([]);
+
+// Lifecycle hooks
+onMounted(async () => {
+  try {
+    const response = await fetch('/posts.json');
+    posts.value = await response.json();
+  } catch (error) {
+    console.error("Failed to fetch posts:", error);
+  }
+});
 </script>
+
 
 <style scoped>
 .content-container {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: var(--color-background-soft);
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex; /* Add this line */
     flex-direction: column; /* Add this line */
     align-items: center; /* Add this line */
@@ -47,10 +40,11 @@ export default {
 
 .intro-section {
     text-align: center;
-    padding: 20px;
-    margin-bottom: -10px;
+    padding-bottom: 20px;
     border-bottom: 1px solid var(--color-border);
-    width: 100%; /* Ensure the intro section takes full width */
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 15px;
 }
 
 .news-item {

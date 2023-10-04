@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "type": "video",
+        "title": "🔥 Epic 2-2 Draw: Arsenal vs Tottenham! ⚽️",
+        "content": "In a thrilling encounter that had fans on the edge of their seats, Arsenal and Tottenham played out a 2-2 draw. Both Mikel Arteta's and Ange Postecoglou's teams showcased the tactical nuances that have drawn comparisons in the media recently. The match served as a testament to their similar playstyles, leaving pundits and fans debating over which manager has the upper hand.",
+        "source": "vid/ArsenalTottenhamHighlights.mp4"
+    },
+    {
+        "id": 2,
+        "type": "audio",
+        "title": "🎙️ The SDS Podcast: Early UCL Predictions for '23/'24!",
+        "content": "Host Sharky, along with friends Faysal, Leeyas, and Haseeb, dive deep into the Champions League possibilities for the upcoming '23/'24 season in this episode of The SDS Podcast. Tune in to hear their expert analyses, cheeky bets, and wild predictions!",
+        "source": "audio/SDSPodcast1.mp3"
+    },
+    {
+        "id": 3,
+        "type": "text",
+        "title": "🌟 Reflecting on the Magic of Maradona 🌟",
+        "content": "Diego Maradona - a name synonymous with footballing genius. From the slums of Buenos Aires to the world's grandest stages, Maradona showcased a masterclass of skill, vision, and passion. A player who wore his heart on his sleeve, his footballing prowess left fans and foes alike in awe. His legacy remains unparalleled.",
+        "source": "img/MaradonaPost.jpeg"
+    },
+    {
+        "id": 4,
+        "type": "youtube",
+        "title": "Interview Moments That Will Never Be Forgotten 😭😭",
+        "content": "From hilarious gaffes to unexpected antics, dive into some of the most unforgettable moments in football interviews. These are the one-of-a-kind, laugh-out-loud snippets that remind us footballers are just as human as the rest of us. A compilation not to be missed!",
+        "source": "https://www.youtube.com/embed/SJcnCO5rDN8?si=PH6rfftzfjUrB0P0"
+    }
+]

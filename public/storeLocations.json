@@ -1,0 +1,114 @@
+{
+    "VIC": [
+        {
+            "name": "Melbourne CBD",
+            "lat": -37.814,
+            "lng": 144.96332,
+            "description": "Our flagship store in Melbourne."
+        },
+        {
+            "name": "Geelong",
+            "lat": -38.14711,
+            "lng": 144.36069,
+            "description": "Located in the heart of Geelong."
+        },
+        {
+            "name": "Ballarat",
+            "lat": -37.5622,
+            "lng": 143.8503,
+            "description": "Discover our store in the historic city of Ballarat."
+        },
+        {
+            "name": "Dandenong",
+            "lat": -37.9876,
+            "lng": 145.2140,
+            "description": "Explore our store in the vibrant heart of Dandenong."
+        }
+    ],
+    "NSW": [
+        {
+            "name": "Canberra",
+            "lat": -35.2809,
+            "lng": 149.1300,
+            "description": "Our flagship store in the nation's capital, Canberra."
+        },
+        {
+            "name": "Sydney CBD",
+            "lat": -33.8688,
+            "lng": 151.2093,
+            "description": "Our main store in Sydney."
+        },
+        {
+            "name": "Newcastle",
+            "lat": -32.9283,
+            "lng": 151.7817,
+            "description": "Situated in the bustling city of Newcastle."
+        },
+        {
+            "name": "Parramatta",
+            "lat": -33.8132,
+            "lng": 151.0034,
+            "description": "Located in the thriving city of Parramatta."
+        },
+        {
+            "name": "Wollongong",
+            "lat": -34.4278,
+            "lng": 150.8931,
+            "description": "Visit us in the coastal city of Wollongong."
+        }
+    ],
+    "QLD": [
+        {
+            "name": "Brisbane CBD",
+            "lat": -27.4698,
+            "lng": 153.0251,
+            "description": "Our primary store in Brisbane."
+        },
+        {
+            "name": "Gold Coast",
+            "lat": -28.0167,
+            "lng": 153.4000,
+            "description": "Located near the beautiful beaches."
+        }
+    ],
+    "SA": [
+        {
+            "name": "Smithfield",
+            "lat": -34.6904,
+            "lng": 138.6782,
+            "description": "Experience Foopy at our Smithfield outlet in South Australia."
+        },
+        {
+            "name": "Adelaide CBD",
+            "lat": -34.9285,
+            "lng": 138.6007,
+            "description": "Located at the center of Adelaide."
+        },
+        {
+            "name": "Port Adelaide",
+            "lat": -34.8447,
+            "lng": 138.5022,
+            "description": "Our coastal store in Port Adelaide."
+        }
+    ],
+    "WA": [
+        {
+            "name": "Perth CBD",
+            "lat": -31.9505,
+            "lng": 115.8605,
+            "description": "Our flagship store in Perth."
+        },
+        {
+            "name": "Broome",
+            "lat": -17.9614,
+            "lng": 122.2359,
+            "description": "A tropical experience at our Broome branch."
+        },
+        {
+            "name": "Fremantle",
+            "lat": -32.0569,
+            "lng": 115.7439,
+            "description": "Enjoy the sea breeze at our Fremantle branch."
+        }
+    ]
+}
