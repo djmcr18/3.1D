@@ -55,7 +55,7 @@
                     33 21 67 37 75 35 8 -3 60 -20 116 -39z"/>
                     </g>
             </svg> <br><br>
-            <h3>The best football news updates, the best football community forums, and the best online football store.</h3><br>
+            <h3>The best football news updates, the best football community forums, and the best football store.</h3><br>
             <p>The only site you'll ever need for everything football!</p>
         </div>
   
