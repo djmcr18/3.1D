@@ -8,7 +8,7 @@
   
       <form @submit.prevent="loginUser">
           <label for="loginEmail">Email:</label>
-          <input type="email" id="loginEmail" v-model="loginEmail">
+          <input type="email" id="loginEmail" v-model="loginEmail" v-auto-focus>
   
           <label for="loginPassword">Password:</label>
           <input type="password" id="loginPassword" v-model="loginPassword">

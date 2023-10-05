@@ -56,7 +56,7 @@
     margin-left: -50px;   /* Adjust according to the parent container's padding */
     margin-right: 0px;  /* Adjust according to the parent container's padding */
     flex-shrink: 0; /* Ensure the footer doesn't shrink */
-    width: calc(100% + 20px);  /* Adjust the width to span the full viewport width plus the total of both negative margins */
+    width: calc(100% + 100px);  /* Adjust the width to span the full viewport width plus the total of both negative margins */
 }
   
   .footer-content {
