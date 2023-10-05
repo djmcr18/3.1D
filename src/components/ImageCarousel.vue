@@ -15,6 +15,8 @@ import { ref } from 'vue';
 
 // Data
 const images = ref([
+  'img/MoreliaNeo3.jpeg',
+  'img/ChampionsLeagueBall.jpeg',
   'img/Jguard.jpeg',
   'img/AmoSockTape.png',
   'img/trusox.png',

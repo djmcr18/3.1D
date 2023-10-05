@@ -28,7 +28,7 @@
         </form>
     </div>
 
-    <teleport to="body">
+    <teleport to="#modal-target">
         <div v-if="showModal" class="modal" @click="closeModal">
             <div class="modal-content" @click.stop>
                 <span @click="closeModal" class="close-button">&times;</span>
