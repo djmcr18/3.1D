@@ -34,9 +34,9 @@
                 <ul>
                     <li><router-link to="/CustomerRegistration"><i class="fas fa-user-plus"></i> Register</router-link></li>
                     <li><router-link to="/login"><i class="fas fa-sign-in-alt"></i> Login</router-link></li>
-                    <li><a href="#" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
-                    <li><a href="#" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
-                    <li><a href="#" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="https://www.linkedin.com/in/diego-miranda-22bb51269/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="https://www.facebook.com/your-facebook-id/" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
                 </ul>
             </div>
         </div>
@@ -46,7 +46,7 @@
     </footer>
 </template>
   
-  <style scoped>
+<style scoped>
 .foopy-footer {
     background-color: #fff;
     color: #333;
@@ -139,6 +139,15 @@
     .footer-section:last-child {
         margin-bottom: 0;
     }
-  }
-  </style>
+
+    .foopy-footer {
+        margin-left: -20px;   /* Adjust according to the parent container's padding */
+        margin-right: 0px;  /* Adjust according to the parent container's padding */
+        flex-shrink: 0; /* Ensure the footer doesn't shrink */
+        width: calc(100% + 40px);  /* Adjust the width to span the full viewport width plus the total of both negative margins */
+    }
+    }
+
+
+</style>
   
