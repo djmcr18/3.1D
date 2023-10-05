@@ -70,7 +70,7 @@ import { ref, onMounted } from 'vue';
 import { db } from '../firebase.js';
 import { getAuth } from 'firebase/auth';
 const auth = getAuth();
-import { collection, getDocs, addDoc, doc, updateDoc, arrayUnion, increment, orderBy, query } from 'firebase/firestore';
+import { collection, getDocs, addDoc, doc, updateDoc, deleteDoc, arrayUnion, increment, orderBy, query } from 'firebase/firestore';
 
 const posts = ref([]);
 const newPostContent = ref('');

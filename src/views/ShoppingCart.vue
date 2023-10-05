@@ -189,34 +189,41 @@ const incrementQuantity = product => addToCart(product);
 }
 
 @media (max-width: 768px) {
+  .content-container {
+    padding: 0 60px; /* Add some padding to the left and right for better margins on small screens */
+  }
+
   .cart-item {
-    flex-direction: column; /* Stack items vertically */
-    text-align: center; /* Center content within each item */
-    align-items: center; /* Center items horizontally */
+    flex-direction: column; /* Stack items vertically and center content within each item */
+    text-align: center;
+    align-items: center;
     padding: 20px;
   }
 
   .product-image {
-    max-width: 170px;
-    margin-bottom: 10px; /* Adds some space below the image */
+    width: calc(100% - 30px); /* 100% of the container width minus 30px for some space */
+    max-width: 150px; /* Ensures the width doesn't exceed 150px */
+    margin-bottom: 15px; /* Adds some space below the image */
   }
-
   .item-details {
     width: 100%; /* Take up the full width */
+    flex-direction: column; /* Align item details vertically */
+    align-items: center; /* Center align items for a better look */
     margin-bottom: 10px; /* Adds some space below the item details */
   }
 
-  .item-name, .item-price, .quantity-controls, .remove-button {
+  .item-name, .item-price, .quantity-controls {
     margin: 10px 0; /* Adds vertical spacing between these elements */
   }
-  
+
   .quantity-controls {
     justify-content: center; /* Center the +, -, and quantity display horizontally */
   }
-  
+
   .remove-button {
     margin-left: 0;
     margin-right: 0;
+    margin: 0px 0; /* Adjust the margin to accommodate the vertical layout */
   }
 }
 
@@ -228,55 +235,28 @@ const incrementQuantity = product => addToCart(product);
   transform: translateY(30px) scale(0.5);
 }
 
-@media (max-width: 768px) { /* Tablet devices */
-    .content-container {
-        padding: 0 20px; /* Add some padding to the left and right for better margins on small screens */
-    }
-
-    .cart-item {
-        flex-direction: column; /* Display cart item details vertically */
-    }
-
-    .product-image {
-        margin-bottom: 15px; /* Provide space between the image and the item details */
-        max-width: 50%;
-    }
-
-    .item-details {
-        flex-direction: column; /* Align item details vertically */
-        align-items: center; /* Center align items for a better look */
-    }
-
-    .item-name, .item-price, .quantity-controls {
-        margin: 10px 0; /* Provide more spacing between items */
-    }
-
-    .remove-button {
-        margin: 0px 0; /* Adjust the margin to accommodate the vertical layout */
-    }
-}
-
 @media (max-width: 480px) { /* Mobile devices */
-    .item-name {
-        font-size: 16px; /* Reduce the font size slightly */
-    }
+  .item-name {
+    font-size: 16px; /* Reduce the font size slightly */
+  }
 
-    .item-price {
-        font-size: 14px; /* Reduce the font size slightly */
-    }
+  .item-price {
+    font-size: 14px; /* Reduce the font size slightly */
+  }
 
-    .quantity-button, .remove-button {
-        padding: 5px 10px; /* Reduce padding to fit smaller screens */
-        font-size: 12px; /* Reduce font size for a neater look */
-    }
+  .quantity-button, .remove-button {
+    padding: 5px 10px; /* Reduce padding to fit smaller screens */
+    font-size: 12px; /* Reduce font size for a neater look */
+  }
 
-    .cart-total {
-        font-size: 20px; /* Adjust font size for cart total */
-    }
+  .cart-total {
+    font-size: 20px; /* Adjust font size for cart total */
+  }
 
-    .checkout-button {
-        font-size: 16px; /* Adjust font size for the checkout button */
-        padding: 12px; /* Reduce padding slightly */
-    }
+  .checkout-button {
+    font-size: 16px; /* Adjust font size for the checkout button */
+    padding: 12px; /* Reduce padding slightly */
+  }
 }
+
 </style>

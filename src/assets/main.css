@@ -147,10 +147,22 @@ main {
 
 #app {
   padding-top: 60px; /* Adjust based on the combined height of your top bar. */
-  /* ... other styles ... */
 }
 
 html, body, #app {
   height: 100%;
   margin: 0;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 20px; /* Further reduce the padding for tablets and mobile devices */
+    margin: 30px auto;
+  }
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 15px; /* Minimal padding for very narrow screens */
+  }
 }
