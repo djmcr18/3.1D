@@ -51,7 +51,7 @@ const loginUser = async () => {
 
     } catch (error) {
         console.error("Login error:", error);
-        message.value = error.message || "Failed to login.";
+        message.value = "Login failed. Please check your email and password.";;
         messageType.value = "error";
         showModal.value = true;
     }
