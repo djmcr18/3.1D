@@ -117,7 +117,7 @@ import ImageCarousel from '../components/ImageCarousel.vue';
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
-    margin: 40px 0;
+    margin: 40px -10px 0 -10px;
     padding: 20px;
 }
 
@@ -127,6 +127,7 @@ import ImageCarousel from '../components/ImageCarousel.vue';
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     transition: transform 0.2s, box-shadow 0.2s;
+    margin: 0 -5px 0 -5px
 }
 
 .map-box:hover {
@@ -195,6 +196,10 @@ import ImageCarousel from '../components/ImageCarousel.vue';
 @media (max-width: 768px) { /* Tablet and below */
     .map-grid {
         grid-template-columns: 1fr; /* Stack vertically */
+    }
+
+    .map-box {
+        margin: 5px -15px 0px -15px; /* Further reduce the top and bottom margins */
     }
     
     .carousel-heading,
