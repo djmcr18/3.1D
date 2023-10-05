@@ -9,6 +9,7 @@ import RegistrationForm from '../views/RegistrationForm.vue';
 import TacticsBoard from '../views/TacticsBoard.vue';
 import LoginForm from '../views/LoginForm.vue';
 import Forums from '../views/Forums.vue'
+import NotFound from '../views/NotFound.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -18,6 +19,7 @@ const routes = [
   { path: '/CustomerRegistration', component: RegistrationForm },
   { path: '/TacticsBoard', component: TacticsBoard },
   { path: '/login', component: LoginForm },
+  { path: '/:pathMatch(.*)*', component: NotFound },
   {
     path: '/forums',
     name: 'Forums',
