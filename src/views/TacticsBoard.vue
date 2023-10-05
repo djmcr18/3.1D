@@ -22,7 +22,7 @@
     </div>
   </template>
   
-  <script setup>
+<script setup>
   import { ref, onMounted } from "vue";
   import { onBeforeUnmount } from "vue";
   
@@ -111,99 +111,127 @@
     ctx.beginPath();
     ctx.arc(w * 0.707, h / 2, w * 0.0028, 0, 2 * Math.PI);
     ctx.fill();
-};
+  };
 
-const startDrawingTouch = (event) => {
-    drawing = true;
-    const context = canvas.value.getContext("2d");
-    context.beginPath();
-};
+  // Declare a global array to store drawing data
+  let drawnLines = [];
 
-const drawTouch = (event) => {
-    if (!drawing) return;
-    const context = canvas.value.getContext("2d");
-    context.lineWidth = 5;
-    context.lineCap = "round";
-    context.strokeStyle = "red";
+  const startDrawingTouch = (event) => {
+      drawing = true;
+      const context = canvas.value.getContext("2d");
+      context.beginPath();
+  };
 
-    // Get touch coordinates
-    const rect = canvas.value.getBoundingClientRect();
-    const touch = event.touches[0];
-    const x = touch.clientX - rect.left;
-    const y = touch.clientY - rect.top;
+  const drawTouch = (event) => {
+      if (!drawing) return;
+      const context = canvas.value.getContext("2d");
+      context.lineWidth = 5;
+      context.lineCap = "round";
+      context.strokeStyle = "red";
 
-    context.lineTo(x, y);
-    context.stroke();
-    context.beginPath();
-    context.moveTo(x, y);
+      const rect = canvas.value.getBoundingClientRect();
+      const touch = event.touches[0];
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
 
-    // Prevent scrolling when drawing on the canvas
-    event.preventDefault();
-};
-  </script>
+      context.lineTo(x, y);
+      context.stroke();
+      context.beginPath();
+      context.moveTo(x, y);
+
+      // Store the line data
+      drawnLines.push({ x, y });
+
+      event.preventDefault();
+  };
+
+  // Function to redraw canvas content based on stored data
+  const redrawCanvas = () => {
+      const context = canvas.value.getContext("2d");
+      context.lineWidth = 5;
+      context.lineCap = "round";
+      context.strokeStyle = "red";
+
+      drawnLines.forEach(line => {
+          context.lineTo(line.x, line.y);
+          context.stroke();
+          context.beginPath();
+          context.moveTo(line.x, line.y);
+      });
+  };
+
+  // Add the scroll listener to redraw the canvas content
+  window.addEventListener('scroll', redrawCanvas);
+
+  // Optional: Add the listener for orientation change if on mobile
+  window.addEventListener('orientationchange', () => {
+      handleResize(); // Assuming you still want to handle the canvas resizing
+      redrawCanvas();
+  });
+</script>
   
-  <style scoped>
-  .content-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-  }
 
-  .intro-section {
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 15px;
-  }
-  
-  .news-item {
-      margin: 2rem 0; /* Using rem units for margins */
-      padding: 1rem; /* Using rem for padding */
-      background-color: var(--color-background);
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
-      width: 90%; /* Reducing the width to 90% to make it a bit smaller */
-      max-width: 650px; /* Reducing max-width to 650px from 700px */
-      position: relative;
-      overflow: hidden;
-  }
-  
-  canvas {
-      display: block;
-      width: 100%;
-      height: auto;
-      background-color: #006400;
-      cursor: crosshair;
-  }
-  
-  /* Media queries for smaller screens */
-  @media (max-width: 800px) { /* Reduced the breakpoint for adjustments */
-      .news-item {
-          margin: 1rem 0;
-          padding: 0.5rem;
-      }
-  }
+<style scoped>
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-  @media (max-width: 768px) { /* Mobile devices */
-    .intro-section h1 {
-        font-size: 24px; /* Reduced size for the main title */
+.intro-section {
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 15px;
+}
+
+.news-item {
+    margin: 2rem 0; /* Using rem units for margins */
+    padding: 1rem; /* Using rem for padding */
+    background-color: var(--color-background);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 90%; /* Reducing the width to 90% to make it a bit smaller */
+    max-width: 650px; /* Reducing max-width to 650px from 700px */
+    position: relative;
+    overflow: hidden;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    background-color: #006400;
+    cursor: crosshair;
+}
+
+/* Media queries for smaller screens */
+@media (max-width: 800px) { /* Reduced the breakpoint for adjustments */
+    .news-item {
+        margin: 1rem 0;
+        padding: 0.5rem;
     }
+}
 
-    .intro-section h3 {
-        font-size: 16px; /* Reduced size for the description */
-    }
+@media (max-width: 768px) { /* Mobile devices */
+  .intro-section h1 {
+      font-size: 24px; /* Reduced size for the main title */
+  }
+
+  .intro-section h3 {
+      font-size: 16px; /* Reduced size for the description */
+  }
 }
 
 /* The next one is just for very narrow screens */
 @media (max-width: 400px) {
-    .news-item {
-        margin: 0.5rem 0;
-        padding: 0.25rem;
-    }
+  .news-item {
+      margin: 0.5rem 0;
+      padding: 0.25rem;
+  }
 
-    canvas {
-        /* Ensure the canvas doesn't get too small */
-        min-height: 200px;
-    }
+  canvas {
+      /* Ensure the canvas doesn't get too small */
+      min-height: 200px;
+  }
 }
-  </style>
-  
+</style>
