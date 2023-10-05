@@ -7,12 +7,16 @@
   
       <div class="news-item">
         <canvas 
-          ref="canvas" 
-          style="width: 100%; max-width: 700px; height: auto;"
-          @mousedown="startDrawing" 
-          @mouseup="endDrawing" 
-          @mouseout="endDrawing" 
-          @mousemove="draw"
+            ref="canvas" 
+            style="width: 100%; max-width: 700px; height: auto;"
+            @mousedown="startDrawing" 
+            @mouseup="endDrawing" 
+            @mouseout="endDrawing" 
+            @mousemove="draw"
+            @touchstart="startDrawingTouch"
+            @touchend="endDrawing"
+            @touchmove="drawTouch"
+            @touchcancel="endDrawing"
         ></canvas>
       </div>
     </div>
@@ -109,6 +113,33 @@
     ctx.fill();
 };
 
+const startDrawingTouch = (event) => {
+    drawing = true;
+    const context = canvas.value.getContext("2d");
+    context.beginPath();
+};
+
+const drawTouch = (event) => {
+    if (!drawing) return;
+    const context = canvas.value.getContext("2d");
+    context.lineWidth = 5;
+    context.lineCap = "round";
+    context.strokeStyle = "red";
+
+    // Get touch coordinates
+    const rect = canvas.value.getBoundingClientRect();
+    const touch = event.touches[0];
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+
+    context.lineTo(x, y);
+    context.stroke();
+    context.beginPath();
+    context.moveTo(x, y);
+
+    // Prevent scrolling when drawing on the canvas
+    event.preventDefault();
+};
   </script>
   
   <style scoped>
