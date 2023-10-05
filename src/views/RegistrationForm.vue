@@ -59,6 +59,14 @@ const showModal = ref(false);
 const router = useRouter();
 
 const registerUser = async () => {
+    // Input validation checks for all fields
+    if (!FirstName.value || !LastName.value || !Email.value || !Password.value || !PhoneNumber.value || !Address.value) {
+        message.value = "Please fill in all required fields.";
+        messageType.value = "error";
+        showModal.value = true;
+        return;
+    }
+
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, Email.value, Password.value);
         const user = userCredential.user;
@@ -79,7 +87,7 @@ const registerUser = async () => {
         // Wait for 2 seconds then redirect to login
         setTimeout(() => {
             closeModal();
-            router.push('/login'); // Redirects to login page
+            router.push('/login'); // Redirects to the login page
         }, 2000);  // 2000 milliseconds = 2 seconds
 
     } catch (error) {
@@ -116,9 +124,10 @@ const saveUserInFirestore = async (userId) => {
 
 const closeModal = () => {
     showModal.value = false;
-    message.value = "";  // Clear the message when modal is closed
+    message.value = "";  // Clear the message when the modal is closed
 };
 </script>
+
 
 
 <style scoped>
