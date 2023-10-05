@@ -2,6 +2,7 @@
   <div class="content-container">
     <div class="intro-section">
       <h1>Foopy Forums</h1>
+      <h3> Ask questions, vent about your matches, talk about anything footy related...</h3>
     </div>
 
     <!-- New Post Form -->
@@ -15,23 +16,43 @@
 
     <!-- List of Posts -->
     <div v-for="post in posts" :key="post.id" class="post-container">
-      <div class="post-title">
+      <div v-if="!post.isEditing" class="post-title">
         {{ post.title }} <small>by {{ post.username }}</small>
       </div>
-      <div class="post-content">{{ post.content }}</div>
+      <div v-if="post.isEditing" contenteditable="true" @input="updatePostTitle($event, post)" :data-value="post.title" class="editable-post">
+          {{ post.title }}
+      </div>
+
+      <div v-if="!post.isEditing" class="post-content">{{ post.content }}</div>
+            <div v-if="post.isEditing" contenteditable="true" @input="updatePostContent($event, post)" :data-value="post.content" class="editable-post">
+          {{ post.content }}
+      </div>
+
       <div v-if="auth.currentUser && auth.currentUser.uid === post.userId" class="post-actions">
-          <button @click="editPost(post)">Edit</button>
-          <button @click="deletePost(post.id)">Delete</button>
+        <button v-if="!post.isEditing" @click="editPost(post)">Edit</button>
+        <button v-if="post.isEditing" @click="savePostEdit(post)">Save</button>
+        <button v-if="post.isEditing" @click="cancelPostEdit(post, post.title, post.content)">Cancel</button>
+        <button @click="deletePost(post.id)">Delete</button>
       </div>
 
       <div v-for="reply in post.replies" :key="reply.content" class="post-reply">
-          <div class="reply-content-username-wrap">
+          <div v-if="!reply.isEditing" class="reply-content-username-wrap">
               {{ reply.content }} <small>by {{ reply.username }}</small>
           </div>
-          <div v-if="auth.currentUser && auth.currentUser.uid === reply.userId" class="reply-actions">
-              <button @click="editReply(reply, post)">Edit</button>
-              <button @click="deleteReply(reply, post)">Delete</button>
+
+          <div v-if="reply.isEditing" class="reply-edit-container">
+              <div contenteditable="true" @input="updateReplyContent($event, reply)" :data-value="reply.content" class="editable-reply">
+                  {{ reply.content }}
+              </div>
+
+              <div class="reply-edit-actions">
+                  <button @click="saveReplyEdit(reply, post)">Save</button>
+                  <button @click="cancelReplyEdit(reply, reply.content)">Cancel</button>
+              </div>
           </div>
+
+          <button v-if="!reply.isEditing && auth.currentUser && auth.currentUser.uid === reply.userId" @click="editReply(reply)">Edit</button>
+          <button v-if="auth.currentUser && auth.currentUser.uid === reply.userId" @click="deleteReply(reply, post)">Delete</button>
       </div>
 
       <div class="action-buttons">
@@ -124,19 +145,56 @@ const submitReply = async (post) => {
   }
 }
 
-const editPost = (post) => {
-    const updatedTitle = prompt('Edit your post title:', post.title);
-    const updatedContent = prompt('Edit your post content:', post.content);
-    if (updatedTitle && updatedContent) {
-        // Update locally
-        post.title = updatedTitle;
-        post.content = updatedContent;
+const updatePostTitle = (event, post) => {
+    post.title = event.target.innerText;
+};
 
-        // Update on the server
-        const postRef = doc(db, "forums", post.id);
-        updateDoc(postRef, { title: updatedTitle, content: updatedContent });
-    }
+const updatePostContent = (event, post) => {
+    post.content = event.target.innerText;
+};
+
+
+const editPost = (post) => {
+    post.originalTitle = post.title;  // Save the original title
+    post.originalContent = post.content;  // Save the original content
+    post.isEditing = true;  // Enable editing mode
 }
+
+const savePostEdit = (post) => {
+    // Update on the server
+    const postRef = doc(db, "forums", post.id);
+    updateDoc(postRef, { title: post.title, content: post.content });
+    post.isEditing = false; // Exit editing mode
+}
+
+const cancelPostEdit = (post) => {
+    post.title = post.originalTitle;  // Revert to original title
+    post.content = post.originalContent;  // Revert to original content
+    post.isEditing = false;  // Exit editing mode
+}
+
+const editReply = (reply) => {
+    reply.originalContent = reply.content;
+    reply.currentEditingContent = reply.content; // New line
+    reply.isEditing = true;
+};
+
+const updateReplyContent = (event, reply) => {
+    reply.currentEditingContent = event.target.innerText;
+};
+
+const saveReplyEdit = (reply, post) => {
+    reply.content = reply.currentEditingContent;
+    // Update on the server
+    const postRef = doc(db, "forums", post.id);
+    updateDoc(postRef, { replies: post.replies });
+    reply.isEditing = false;  // Exit editing mode
+};
+
+const cancelReplyEdit = (reply) => {
+    reply.isEditing = false;
+    delete reply.currentEditingContent;  // Clean up
+};
 
 const deletePost = async (postId) => {
     if (confirm('Are you sure you want to delete this post?')) {
@@ -148,23 +206,6 @@ const deletePost = async (postId) => {
         const postIndex = posts.value.findIndex(p => p.id === postId);
         if (postIndex !== -1) {
             posts.value.splice(postIndex, 1);
-        }
-    }
-}
-
-const editReply = (reply, post) => {
-    // This can be a modal or an inline editable field.
-    // For simplicity, let's use a prompt for now.
-    const updatedReply = prompt('Edit your reply:', reply.content);
-    if (updatedReply) {
-        // Find the index of the reply within the post's replies array.no
-        const replyIndex = post.replies.findIndex(r => r.content === reply.content && r.userId === reply.userId);
-        if (replyIndex !== -1) {
-            // Update locally
-            post.replies[replyIndex].content = updatedReply;
-            // Update on the server
-            const postRef = doc(db, "forums", post.id);
-            updateDoc(postRef, { replies: post.replies });
         }
     }
 }
@@ -363,6 +404,67 @@ button {
     margin-bottom: 10px;
 }
 
+/* Editable fields enhancements */
+.editable-post:focus, 
+.editable-reply:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0,123,255,0.5);  /* A subtle glow */
+}
+
+.editable-post, 
+.editable-reply {
+    background-color: #fdfdfd;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    flex: 1;  /* Make it take the available space */
+    margin-right: 10px;  /* Space between the text area and buttons */
+}
+
+.reply-edit-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;  /* Make sure it takes up full width */
+}
+
+.reply-edit-actions {
+    display: flex;  /* Line the buttons up in a row */
+    gap: 10px;  /* Space between buttons */
+}
+
+/* Enhancements for buttons in Edit mode */
+.post-actions button {
+    background-color: #f1f1f1;
+    color: #333;
+    border: 1px solid #e1e1e1;
+    margin-right: 5px;
+}
+
+.post-actions button:hover {
+    background-color: #e1e1e1;
+}
+
+.post-actions button:active {
+    background-color: #d1d1d1;
+    transform: scale(0.98);  /* A slight size reduction for a "pressed" effect */
+}
+
+/* Consider adding a distinct style for Delete button for better UX */
+.post-actions button:last-child {
+    background-color: #d9534f;
+    color: white;
+}
+
+.post-actions button:last-child:hover {
+    background-color: #c43c3a;
+}
+
+.post-actions button:last-child:active {
+    background-color: #b52a28;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) { /* Tablets and below */
 
@@ -372,6 +474,10 @@ button {
 
     .intro-section h1, .post-title {
         font-size: 24px; /* Slightly reduced for tablets */
+    }
+
+    .intro-section h3 {
+      font-size: 16px;
     }
 
     .post-content {
@@ -389,12 +495,29 @@ button {
     .post-input, .reply-input, .post-title-input {
         font-size: 14px; /* Smaller font size for contenteditable areas */
     }
+
+    .reply-edit-container {
+        flex-direction: column;
+    }
+
+    .editable-reply {
+        margin-bottom: 10px; /* Add some space before the buttons */
+        width: 85%;
+    }
+
+    .reply-edit-actions {
+        justify-content: space-between; /* Spread buttons apart */
+    }
 }
 
 @media (max-width: 500px) { /* Mobile devices */
 
     .intro-section h1, .post-title {
         font-size: 22px; /* Further reduction for mobile */
+    }
+
+    .intro-section h3 {
+      font-size: 15px;
     }
 
     .post-content {
@@ -411,6 +534,20 @@ button {
 
     .post-input, .reply-input, .post-title-input {
         font-size: 13px; /* Smaller font size for mobile */
+    }
+    
+    .reply-edit-container {
+        flex-direction: column;
+    }
+
+    .editable-reply {
+        margin-bottom: 10px; /* Add some space before the buttons */
+        width: 85%;
+    }
+
+    .reply-edit-actions {
+        flex-wrap: wrap; /* Allow buttons to wrap to the next line if needed */
+        gap: 5px; /* Provide a small gap between buttons */
     }
 }
 </style>

@@ -25,45 +25,45 @@
     </div>
   </template>
   
-  <script setup>
-  import { ref, computed } from 'vue';
-  import { auth, signInWithEmailAndPassword } from "../firebase.js";
-  import { useRouter, useRoute } from 'vue-router';
-  
-  const loginEmail = ref("");
-  const loginPassword = ref("");
-  const message = ref("");
-  const messageType = ref("");
-  const showModal = ref(false);
-  const router = useRouter();
-  const route = useRoute();
-  
-  const loginUser = async () => {
-      try {
-          await signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value);
-          message.value = "Login successful!";
-          messageType.value = "success";
-          showModal.value = true;
-  
-          setTimeout(() => {
-              router.push('/');  // redirect to home page
-          }, 1000); // 1000 milliseconds = 1 second
-  
-      } catch (error) {
-          console.error("Login error:", error);
-          message.value = error.message || "Failed to login.";
-          messageType.value = "error";
-          showModal.value = true;
-      }
-  };
-  
-  const closeModal = () => {
-      showModal.value = false;
-      message.value = "";
-  };
-  
-  const fromForums = computed(() => route.query.from === 'Forums');
-  </script>
+<script setup>
+import { ref, computed } from 'vue';
+import { auth, signInWithEmailAndPassword } from "../firebase.js";
+import { useRouter, useRoute } from 'vue-router';
+
+const loginEmail = ref("");
+const loginPassword = ref("");
+const message = ref("");
+const messageType = ref("");
+const showModal = ref(false);
+const router = useRouter();
+const route = useRoute();
+
+const loginUser = async () => {
+    try {
+        await signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value);
+        message.value = "Login successful!";
+        messageType.value = "success";
+        showModal.value = true;
+
+        setTimeout(() => {
+            router.push('/');  // redirect to home page
+        }, 1000); // 1000 milliseconds = 1 second
+
+    } catch (error) {
+        console.error("Login error:", error);
+        message.value = error.message || "Failed to login.";
+        messageType.value = "error";
+        showModal.value = true;
+    }
+};
+
+const closeModal = () => {
+    showModal.value = false;
+    message.value = "";
+};
+
+const fromForums = computed(() => route.query.from === 'Forums');
+</script>
   
 <style scoped>
 

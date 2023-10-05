@@ -32,7 +32,7 @@
                 <router-link class="nav-link" to="/foopyfeed" @click="closeMenu">News Feed</router-link>
                 <router-link class="nav-link" to="/forums" @click="closeMenu">Forums</router-link>
                 <router-link class="nav-link" to="/tacticsboard" @click="closeMenu">Tactics Board</router-link>
-                <router-link class="nav-link" to="/store" @click="closeMenu">Store</router-link>
+                <router-link class="nav-link" to="/store" @click="closeMenu">Store Catalogue</router-link>
             </div>
         </div>
     </div>
@@ -61,7 +61,7 @@ const handleScroll = () => {
     const diff = lastScrollPosition.value - currentScrollPosition;
 
     if (diff > 0) {
-        topBarOffset.value += diff / 2;
+        topBarOffset.value += (diff / 2) + 0;
         if (topBarOffset.value > 0) {
             topBarOffset.value = 0;
         }

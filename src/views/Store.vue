@@ -97,7 +97,7 @@ const addItemToCart = (item) => {
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
-  margin: 10px;
+  margin: 10px 10px 40px 10px;  /* top right bottom left */
   text-align: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   width: 200px;
@@ -248,7 +248,7 @@ const addItemToCart = (item) => {
     }
 
     .product {
-        width: 90%; /* Make products take up more width on smaller screens */
+        width: 80%; /* Make products take up more width on smaller screens */
     }
 }
 

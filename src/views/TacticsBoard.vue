@@ -4,7 +4,6 @@
         <h1>Tactics Whiteboard 📋</h1>
         <h3>Unleash your inner manager! Craft and plan your football strategies, set plays, and game-winning tactics on our interactive whiteboard. Perfect for enthusiasts and professional coaches alike.</h3>
       </div>
-
   
       <div class="news-item">
         <canvas 
@@ -153,7 +152,7 @@
       }
   }
 
-  @media (max-width: 600px) { /* Mobile devices */
+  @media (max-width: 768px) { /* Mobile devices */
     .intro-section h1 {
         font-size: 24px; /* Reduced size for the main title */
     }

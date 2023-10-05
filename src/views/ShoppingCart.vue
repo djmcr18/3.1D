@@ -3,7 +3,8 @@
     <div class="intro-section">
       <h1>Your Wishlist</h1>
     </div>
-    <div v-show="cart.length === 0" class="empty-cart">Your cart is empty</div>
+    <div v-show="cart.length === 0" style="font-size: 1.3rem; font-weight: bold; text-align: center; margin: 20px 0;">Your cart is empty</div>
+    <br>
     <div v-show="cart.length > 0" class="cart-items">
       <transition-group name="cart-item-fade" tag="div">
         <div v-for="cartItem in cartItems" :key="cartItem.product.id" class="cart-item">
@@ -59,9 +60,8 @@ const cartTotal = computed(() => {
 });
 
 // Mapping mutations from Vuex store
-const removeFromCart = product => store.commit('removeFromCart', product);
 const decrementCartItem = product => store.commit('decrementCartItem', product);
-const removeAllFromCart = () => store.commit('removeAllFromCart');
+const removeAllFromCart = product => store.commit('removeAllFromCart', product);
 const addToCart = product => store.commit('addToCart', product);
 
 // Additional methods

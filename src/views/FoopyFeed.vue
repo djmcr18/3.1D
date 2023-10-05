@@ -62,4 +62,23 @@ onMounted(async () => {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
+/* Responsive Styles */
+@media (max-width: 768px) { /* Tablets and below */
+.intro-section h1 {
+    font-size: 24px; /* Slightly reduced for tablets */
+}
+.intro-section h3 {
+    font-size: 16px; /* Further reduction for mobile */
+}
+}
+
+@media (max-width: 500px) { /* Mobile devices */
+.intro-section h1 {
+    font-size: 22px; /* Further reduction for mobile */
+}
+.intro-section h3 {
+    font-size: 15px; /* Further reduction for mobile */
+}
+}
+
 </style>
