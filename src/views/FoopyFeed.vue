@@ -11,7 +11,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import NewsFeedPost from '../components/FoopyFeedPost.vue';
+import NewsFeedPost from '../components/NewsFeedPost.vue';
 
 // Components
 const components = { NewsFeedPost };
